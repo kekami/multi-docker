@@ -1,0 +1,22 @@
+sudo: required
+services:
+    - docker
+
+before_install:
+    - docker build -t kekami/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+    - docker run -e CI=true kekami/react-test npm test
+
+after_success:
+    - docker build -t kekami/multi-client ./client
+    - docker build -t kekami/multi-nginx ./nginx
+    - docker build -t kekami/multi-server ./server
+    - docker build -t kekami/multi-worker ./worker
+
+    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+
+    - docker push kekami/multi-client
+    - docker push kekami/multi-nginx
+    - docker push kekami/multi-server
+    - docker push kekami/multi-worker
