@@ -8,7 +8,7 @@ function App() {
   return (
       <Router>
         <div className="App">
-            <h1>Welcome to React</h1>
+            <h1>Fib Calculator</h1>
             <div>
             <Route exact path="/" component={Fib} />
             <Route path="/otherPage" component={OtherPage} />
