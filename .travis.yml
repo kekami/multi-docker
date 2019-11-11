@@ -20,3 +20,15 @@ after_success:
     - docker push kekami/multi-nginx
     - docker push kekami/multi-server
     - docker push kekami/multi-worker
+
+deploy:
+    provider: elasticbeanstalk
+    region: eu-central-1
+    app: multi-docker
+    env: MultiDocker-env
+    bucket_name: elasticbeanstalk-eu-central-1-062367911922
+    bucket_path: docker-multi
+    on:
+        branch: master
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY
